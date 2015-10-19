@@ -23,6 +23,7 @@ if __name__ == "__main__":
         
         #define velocities
         params['velocities'] = np.arange(1000,6000,50)
+        params['smoother'] = 5
         
         #iterate over list of cdps
         #~ for cdp in cdps:

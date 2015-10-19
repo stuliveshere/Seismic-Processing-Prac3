@@ -28,7 +28,7 @@ if __name__ == "__main__":
         cdps = [219, 264, 309, 354, 399, 444, 489, 534, 579]
         
         params['velocities'] = np.arange(2000,6000,50)
-        
+        params['smoother'] = 5
         #~ for cdp in cdps:
                 #~ gather = workspace[workspace['cdp'] == cdp]
                 #~ toolbox.agc(gather, None, **params)

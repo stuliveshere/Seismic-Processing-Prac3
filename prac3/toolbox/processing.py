@@ -4,7 +4,7 @@ import toolbox
 import pylab
 from scipy.signal import butter, lfilter, convolve2d
 from scipy.interpolate import RectBivariateSpline as RBS
-
+import matplotlib
 import numpy.ma as ma
 
 from matplotlib.mlab import griddata
@@ -90,9 +90,10 @@ def build_vels(vels, **kwargs):
         t.append(max(times))
         x.append(max(cdps))
         values.append(max(values))
-        
-
-        zi = pylab.griddata(x, t, values, grid_x, grid_y, interp='linear')
+        try:
+                zi = pylab.griddata(x, t, values, grid_x, grid_y, interp='nn')
+        except RuntimeError:
+                zi = pylab.griddata(x, t, values, grid_x, grid_y, interp='linear')
         window = 50
         filter = np.ones((window,window), 'f')/(1.0*window**2)
         zi = convolve2d(zi, filter, boundary='symm', mode='same')
@@ -164,7 +165,7 @@ def co_nmo(dataset, **kwargs):
                         s = np.zeros_like(stretch[i,:])
                         s[(stretch[i,:] >0.0) & ( stretch[i,:] < kwargs['smute'])] = 1
                 
-                        output['trace'][trace['tracr'],:] = np.interp(tx, tnew, trace['trace']) *s
+                        output['trace'][trace['tracr'],:] = np.interp(tx, tnew, trace['trace']) *s.flatten()
                         
         return output		
                 
@@ -204,7 +205,9 @@ def semb(workspace,**kwargs):
                 kwargs['vels'] = np.ones(kwargs['ns'], 'f') * vels[v]
                 nmo(panel, None, **kwargs)
                 result[v,:] += np.abs(_stack_gather(panel)['trace'])
-        result = result[:,::5]
+                
+                
+        result = result[:,::kwargs['smoother']]
         
         window = 5
         filter = np.ones((window,window), 'f')/(1.0*window**2)
@@ -212,7 +215,7 @@ def semb(workspace,**kwargs):
 
         
         x = vels
-        y = np.arange(ns)[::5]
+        y = np.arange(ns)[::kwargs['smoother']]
         f = RBS(x, y, result, s=0)
         result = f(x, np.arange(ns))
         
