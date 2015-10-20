@@ -15,22 +15,21 @@ None
 if __name__ == "__main__":
         #initialise dataset
         print "initialising dataset"
-        workspace, params = toolbox.initialise('stack.su')
         
-        #turn off gather sort
-        params['primary'] = None
-        params['clip'] = 0.2
         #display check
-        toolbox.display(workspace, None, **params)
+        
         
         #do an fx spectrum, to get an idea of the frequency content
-        #~ toolbox.fx(workspace, None, **params)
+        print "fx spectral analysis"
         
         #set bandpass
-        params['lowcut'] = 20
-        params['highcut'] = 100
+        params['lowcut'] = 0
+        params['highcut'] = 1000
         
-        toolbox.bandpass(workspace, None, **params)
-        toolbox.display(workspace, None, **params)
+        #apply bandpass filter
+
         
-        pylab.show()
+        #display
+        params['primary'] = None
+        params['clip'] = 0.2        
+

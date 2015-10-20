@@ -4,16 +4,14 @@
 import toolbox
 import numpy as np
 import pylab
+pylab.rcParams['image.interpolation'] = 'sinc'
 
 if __name__ == "__main__":
         #import dataset
         print "initialising dataset"
-        workspace, params = toolbox.initialise('al_dynamite.su')
         
         #set gather order to shot gather
-        params['primary'] = 'sx'
-        params['secondary'] = 'gx'
+        params['primary'] = None
+        params['secondary'] = None
         
         #display
-        toolbox.display(workspace, None, **params)
-        pylab.show()

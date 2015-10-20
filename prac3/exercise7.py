@@ -4,7 +4,7 @@
 import toolbox
 import numpy as np
 import pylab
-
+pylab.rcParams['image.interpolation'] = 'sinc'
 #--------------------------------------------------
 #       useful functions
 #-------------------------------------------------
@@ -14,17 +14,18 @@ None
 if __name__ == "__main__":
         #initialise dataset
         print "initialising dataset"
-        workspace, params = toolbox.initialise('stack100.su')
-        params['primary'] = None
+
+        
 
         #basic spectral analysis
-        #~ toolbox.fx(workspace, None, **params)
+
         
-        params['highcut'] = 100
-        params['lowcut'] = 30
+        #set frequency thresholds
         
-        toolbox.bandpass(workspace, None, **params)
-        toolbox.display(workspace, None, **params)
+        #apply
+        
+        #display
+        params['primary'] = None
         
         pylab.show()
         

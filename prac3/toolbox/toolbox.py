@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as pylab
 from matplotlib.widgets import Slider
+pylab.rcParams['image.interpolation'] = 'sinc'
 
 
 
